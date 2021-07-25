@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
   before do
     @user = FactoryBot.build(:user)
   end
@@ -51,9 +50,10 @@ RSpec.describe User, type: :model do
         expect(@user.errors.full_messages).to include('Email is invalid')
       end
       it '同じemailでは登録できない' do
-        @user.email = '@user.email'
-        @user.valid?
-        expect(@user.errors.full_messages).to include('Email is invalid')
+        @user.save
+        another_user = FactoryBot.build(:user, email: @user.email)
+        another_user.valid?
+        expect(another_user.errors.full_messages).to include('Email has already been taken')
       end
       it 'passwordが空では登録できない' do
         @user.password = ''
@@ -71,9 +71,10 @@ RSpec.describe User, type: :model do
         expect(@user.errors.full_messages).to include('Password is invalid. Include both letters and numbers')
       end
       it 'passwordは半角でないと登録できない' do
-        @user.password = 'ABc123'
+        @user.password = 'ABc１２３'
         @user.valid?
-        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
+        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password",
+                                                      'Password is invalid. Include both letters and numbers')
       end
       it 'passwordが5文字以下では登録できない' do
         @user.password = 'abc12'
