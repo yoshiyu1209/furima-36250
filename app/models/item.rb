@@ -14,7 +14,7 @@ class Item < ApplicationRecord
               :text,
               :image
 
-    with_options numericality: { other_than: 1 } do
+    with_options numericality: { other_than: 1, message: "can't be blank"} do
       validates :category_id,
                 :product_status_id,
                 :shipping_charges_id,
@@ -22,8 +22,8 @@ class Item < ApplicationRecord
                 :days_to_ship_id
     end
 
-    with_options format: { with: /\A[0-9]+\z/ } do
-      validates :price, numericality: { greater_than: 300, less_than: 9999999 }
+    with_options format: { with: /\A[0-9]+\z/, message: 'is invalid. Input half-width characters' } do
+      validates :price, numericality: { greater_than: 300, less_than: 9999999, message: 'is out of setting range' }
     end
   end
 
