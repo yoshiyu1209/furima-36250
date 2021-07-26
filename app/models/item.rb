@@ -8,6 +8,25 @@ class Item < ApplicationRecord
   belongs_to :shipping_charges
   belongs_to :shipping_area
   belongs_to :days_to_ship
-  
+
+  with_options presence: true do
+    validates :title,
+              :text,
+              :image
+
+    with_options numericality: { other_than: 1 } do
+      validates :category_id,
+                :product_status_id,
+                :shipping_charges_id,
+                :shipping_area_id,
+                :days_to_ship_id
+    end
+
+    with_options format: { with: /\A[0-9]+\z/ } do
+      validates :price, numericality: { greater_than: 300, less_than: 9999999 }
+    end
+  end
+
+
 
 end
