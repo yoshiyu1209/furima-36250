@@ -14,7 +14,7 @@
 ### Association
 
 - has_many :items
-- has_many :purchase_records
+- has_many :orders
 
 ## items
 
@@ -33,9 +33,9 @@
 ### Association
 
 - belongs_to :user
-- has_one :purchase_record
+- has_one :order
 
-## purchase_records
+## orders
 
 | Column              | Type       | Options                        |
 | ------------------- | ---------- | ------------------------------ |
@@ -46,9 +46,9 @@
 
 - belongs_to :user
 - belongs_to :item
-- has_one :buyer_information
+- has_one :address
 
-## buyer_informations
+## addresses
 
 | Column              | Type       | Options                        |
 | ------------------- | ---------- | ------------------------------ |
@@ -62,4 +62,4 @@
 
 ### Association
 
-- belongs_to :purchase_record
+- belongs_to :order
