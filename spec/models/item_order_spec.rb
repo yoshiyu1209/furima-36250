@@ -2,7 +2,10 @@ require 'rails_helper'
 
 RSpec.describe ItemOrder, type: :model do
   before do
-    @item_order = FactoryBot.build(:item_order)
+    @user = FactoryBot.create(:user)
+    @item = FactoryBot.create(:item)
+    @item_order = FactoryBot.build(:item_order, user_id: @user.id, item_id: @item.id)
+    sleep(0.5)
   end
 
   describe '商品購入' do
@@ -20,6 +23,10 @@ RSpec.describe ItemOrder, type: :model do
       end
       it 'phone_numberが11桁であれば購入できる' do
         @item_order.phone_number = '08088888888'
+        expect(@item_order).to be_valid
+      end
+      it 'building_nameが空でも購入できる' do
+        @item_order.building_name = ''
         expect(@item_order).to be_valid
       end
     end
@@ -51,7 +58,7 @@ RSpec.describe ItemOrder, type: :model do
         expect(@item_order.errors.full_messages).to include("Shipping area can't be blank")
       end
       it 'shipping_area_idが1では購入できない' do
-        @item_order.shipping_area_id = '1'
+        @item_order.shipping_area_id = 1
         @item_order.valid?
         expect(@item_order.errors.full_messages).to include("Shipping area can't be blank")
       end
