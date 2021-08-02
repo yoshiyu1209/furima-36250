@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :item_order do
     
+    token { Faker::Internet.password(min_length: 20, max_length: 30) }
     user_id { Faker::Number.non_zero_digit }
     item_id { Faker::Number.non_zero_digit }
     postal_code { Faker::Number.decimal_part(digits: 3) + '-' + Faker::Number.decimal_part(digits: 4) }
