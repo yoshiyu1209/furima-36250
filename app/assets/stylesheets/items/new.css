@@ -89,6 +89,16 @@
   margin-bottom: 15px;
 }
 
+.center-img {
+  height: 400px;
+}
+
+.center-imgs {
+  width: 500px;
+  display: flex;
+  justify-content: center;
+}
+
 /* /商品画像 */
 
 /* 商品名と商品説明 */
