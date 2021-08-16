@@ -15,7 +15,7 @@ class Item < ApplicationRecord
               :text,
               :image
 
-    with_options numericality: { other_than: 1, message: "can't be blank" } do
+    with_options numericality: { other_than: 1, message: 'を選択してください' } do
       validates :category_id,
                 :product_status_id,
                 :shipping_charges_id,
@@ -24,8 +24,8 @@ class Item < ApplicationRecord
     end
 
     with_options numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999,
-                                 message: 'is out of setting range' } do
-      validates :price, format: { with: /\A[0-9]+\z/, message: 'is invalid. Input half-width characters' }
+                                 message: 'を設定範囲内にしてください' } do
+      validates :price, format: { with: /\A[0-9]+\z/, message: 'は半角数字で入力してください' }
     end
   end
 end
