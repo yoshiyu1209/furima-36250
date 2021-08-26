@@ -1,4 +1,12 @@
 <%= render "shared/header" %>
+
+<main>
+  <div class="main">
+    <%= yield %>
+    <%= render partial: 'layouts/flash_window' %>
+  </div>
+</main>
+
 <div class='main'>
 
   <%# 画面上部の「人生を変えるフリマアプリ」帯部分 %>
@@ -133,7 +141,9 @@
           <li class='list'>
             <%= link_to item_path(item.id) do %>
             <div class='item-img-content'>
+              
               <%= image_tag item.image, class: "item-img" %>
+              
 
               <% if item.order != nil %>
               <div class='sold-out'>

@@ -13,6 +13,7 @@ class ItemsController < ApplicationController
 
   def create
     @item = Item.new(item_params)
+    flash[:notice] = '出品が完了しました。'
     if @item.save
       redirect_to root_path(@item)
     else
@@ -28,6 +29,7 @@ class ItemsController < ApplicationController
 
   def update
     if @item.update(item_params)
+      flash[:notice] = '商品情報を更新しました。'
       redirect_to item_path, method: :get
     else
       render :edit
@@ -36,14 +38,15 @@ class ItemsController < ApplicationController
 
   def destroy
     @item.destroy
+    flash[:notice] = '削除しました。'
     redirect_to root_path
   end
 
   private
 
   def item_params
-    params[:item].permit(:image, :title, :text, :category_id, :product_status_id, :shipping_charges_id, :shipping_area_id,
-                         :days_to_ship_id, :price).merge(user_id: current_user.id)
+    params[:item].permit(:title, :text, :category_id, :product_status_id, :shipping_charges_id, :shipping_area_id,
+                         :days_to_ship_id, :price, :image).merge(user_id: current_user.id)
   end
 
   def set_item
